@@ -1,0 +1,5 @@
+holiday inn 4 99.99
+hilton 5 150.00
+marriott 3 50.99
+four seasons 5 100.00
+hampton inn 2 90.99
