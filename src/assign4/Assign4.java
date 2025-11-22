@@ -27,74 +27,6 @@ public class Assign4 extends Application{
     /**
      * @param args the command line arguments
      */
-    @Override
-    public void start(Stage stage){
-        ListView<String> list = new ListView<String>();
-        ObservableList<String> items = FXCollections.observableArrayList("hotel 1","hotel 2","hotel 3");
-        list.setItems(items);
-        
-        Button starBtn = new Button("Star Rating");
-        starBtn.setStyle("-fx-background-color: #add8e6;");
-         //when mouse hovering over btn
-        starBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                starBtn.setStyle("-fx-background-color: #c9eaf5");
-            }
-        });
-        //when mouse no longer hovering over btn
-        starBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                starBtn.setStyle("-fx-background-color: #add8e6");
-            }
-        });
-        
-        Button lowestBtn = new Button("Lowest Price");
-        lowestBtn.setStyle("-fx-background-color: #add8e6;");
-        //when mouse is hovering over btn
-        lowestBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                lowestBtn.setStyle("-fx-background-color: #c9eaf5");
-            }
-        });
-        //when mouse is no longer hovering over 
-        lowestBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                lowestBtn.setStyle("-fx-background-color: #add8e6");
-            }
-        });
-        
-        Button saveBtn = new Button("Save");
-        saveBtn.setStyle("-fx-background-color: #add8e6;");
-        
-        //when mouse is hovering over btn
-        saveBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                saveBtn.setStyle("-fx-background-color: #c9eaf5");
-            }
-        });
-        //when mouse is no longer hovering over
-        saveBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
-            @Override
-            public void handle(MouseEvent event){
-                saveBtn.setStyle("-fx-background-color: #add8e6");
-            }
-        });
-        
-        HBox hbox = new HBox(10, starBtn, lowestBtn, saveBtn);
-        
-        VBox vbox = new VBox(15, list, hbox);
-        vbox.setPadding(new Insets(15, 12, 13, 14));
-        Scene scene = new Scene(vbox, 400, 320);
-
-        stage.setScene(scene);
-        stage.setTitle("Hotel List");
-        stage.show();
-    }
     
     static class Hotel implements Comparable<Hotel>{
         String name;
@@ -127,10 +59,13 @@ public class Assign4 extends Application{
         }
     }
     
-    public static void main(String[] args) throws IOException{
-        // TODO code application logic here
-        //created a file object to make the file to read from
-        launch(args);
+    
+    @Override
+    public void start(Stage stage)throws IOException{
+        
+        ListView<String> list = new ListView<String>();
+        ObservableList<String> items = FXCollections.observableArrayList();
+        
         File file1 = new File("src/assign4/Hotels.txt"); 
         List<Hotel> hotels = new ArrayList<>();
         //reading the file
@@ -166,6 +101,9 @@ public class Assign4 extends Application{
                 //creating Hotel objects
                 Hotel h = new Hotel(name, stars, price);
                 hotels.add(h);
+        
+                items.add(name + ", Stars: " + stars + ", Price: " + price);
+                
                 
                 //printing hotel info
                 System.out.println("Hotel Name: " + name);
@@ -174,11 +112,84 @@ public class Assign4 extends Application{
                 System.out.println("=====================");
                
             }   
+            //adding the items into the list view
+            list.setItems(items);
         }
         catch (FileNotFoundException e)
         {
             System.out.println("file not found: " + e);
         }
+        
+        //star button
+        Button starBtn = new Button("Star Rating");
+        starBtn.setStyle("-fx-background-color: #add8e6;");
+         //when mouse hovering over btn
+        starBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                starBtn.setStyle("-fx-background-color: #c9eaf5");
+            }
+        });
+        //when mouse no longer hovering over btn
+        starBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                starBtn.setStyle("-fx-background-color: #add8e6");
+            }
+        });
+        
+        //lowest price button
+        Button lowestBtn = new Button("Lowest Price");
+        lowestBtn.setStyle("-fx-background-color: #add8e6;");
+        //when mouse is hovering over btn
+        lowestBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                lowestBtn.setStyle("-fx-background-color: #c9eaf5");
+            }
+        });
+        //when mouse is no longer hovering over 
+        lowestBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                lowestBtn.setStyle("-fx-background-color: #add8e6");
+            }
+        });
+        
+        //save button
+        Button saveBtn = new Button("Save");
+        saveBtn.setStyle("-fx-background-color: #add8e6;");
+        
+        //when mouse is hovering over btn
+        saveBtn.setOnMouseEntered(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                saveBtn.setStyle("-fx-background-color: #c9eaf5");
+            }
+        });
+        //when mouse is no longer hovering over
+        saveBtn.setOnMouseExited(new EventHandler<MouseEvent>(){
+            @Override
+            public void handle(MouseEvent event){
+                saveBtn.setStyle("-fx-background-color: #add8e6");
+            }
+        });
+        
+        HBox hbox = new HBox(10, starBtn, lowestBtn, saveBtn);
+        
+        VBox vbox = new VBox(15, list, hbox);
+        vbox.setPadding(new Insets(15, 12, 13, 14));
+        Scene scene = new Scene(vbox, 400, 320);
+
+        stage.setScene(scene);
+        stage.setTitle("Hotel List");
+        stage.show();
+    }
+    
+    public static void main(String[] args) throws IOException{
+        // TODO code application logic here
+        //created a file object to make the file to read from
+        launch(args);
     }
     
 }
