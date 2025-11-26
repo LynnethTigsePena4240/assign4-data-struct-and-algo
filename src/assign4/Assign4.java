@@ -59,7 +59,21 @@ public class Assign4 extends Application{
         }
     }
     
-    
+    // sort by star rating
+private void sortByStarRating(List<Hotel> hotels, ObservableList<String> items) {
+    Collections.sort(hotels, (h1, h2) -> {
+        int starCompare = Integer.compare(h2.getStars(), h1.getStars());
+        if (starCompare != 0) return starCompare;
+        return h1.getName().compareToIgnoreCase(h2.getName());
+    });
+
+    // update the ListView
+    items.clear();
+    for (Hotel h : hotels) {
+        items.add(h.getName() + ", Stars: " + h.getStars() + ", Price: " + h.getPrice());
+    }
+}
+
     @Override
     public void start(Stage stage)throws IOException{
         
@@ -138,6 +152,10 @@ public class Assign4 extends Application{
             }
         });
         
+        starBtn.setOnAction(e -> {
+            sortByStarRating(hotels, items);
+        });
+
         //lowest price button
         Button lowestBtn = new Button("Lowest Price");
         lowestBtn.setStyle("-fx-background-color: #add8e6;");
