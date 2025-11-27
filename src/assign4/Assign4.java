@@ -4,6 +4,10 @@
  */
 package assign4;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -68,6 +72,16 @@ private void sortByStarRating(List<Hotel> hotels, ObservableList<String> items) 
         if (starCompare != 0) return starCompare;
         return h1.getName().compareToIgnoreCase(h2.getName());
     });
+
+    // update the ListView
+    items.clear();
+    for (Hotel h : hotels) {
+        items.add(h.getName() + ", Stars: " + h.getStars() + ", Price: " + h.getPrice());
+    }
+}
+//sort by lowest price
+private void sortByLowestPrice(List<Hotel> hotels, ObservableList<String> items) {
+    Collections.sort(hotels, Comparator.comparingDouble(Hotel::getPrice));
 
     // update the ListView
     items.clear();
@@ -184,6 +198,10 @@ private static void saveSortedListToFile(List<Hotel> hotels) throws IOException 
             public void handle(MouseEvent event){
                 lowestBtn.setStyle("-fx-background-color: #add8e6");
             }
+        });
+
+        lowestBtn.setOnAction(e -> {
+            sortByLowestPrice(hotels, items);
         });
         
         //save button
