@@ -4,7 +4,9 @@
  */
 package assign4;
 
-import java.io.*;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -74,6 +76,16 @@ private void sortByStarRating(List<Hotel> hotels, ObservableList<String> items) 
     }
 }
 
+private static void saveSortedListToFile(List<Hotel> hotels) throws IOException {
+    try (PrintWriter writer = new PrintWriter(new FileWriter("Sorted.txt"))) {
+        for (Hotel hotel : hotels) {
+            writer.printf("%s|%d|%.2f%n", 
+                hotel.getName(), 
+                hotel.getStars(), 
+                hotel.getPrice());
+        }
+    }
+}
     @Override
     public void start(Stage stage)throws IOException{
         
@@ -190,6 +202,15 @@ private void sortByStarRating(List<Hotel> hotels, ObservableList<String> items) 
             @Override
             public void handle(MouseEvent event){
                 saveBtn.setStyle("-fx-background-color: #add8e6");
+            }
+        });
+        
+        saveBtn.setOnAction(e -> {
+            try {
+                saveSortedListToFile(hotels);
+                System.out.println("Saved successfully!");
+            } catch (IOException ex) {
+                System.err.println("Error: " + ex.getMessage());
             }
         });
         
